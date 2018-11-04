@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "budo src/index.js --dir src --live"
+    "dev": "budo src/index.js --dir src --dir images --live"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/Matsemann/image-workshop#readme",
   "devDependencies": {
-    "budo": "^11.5.0"
+    "budo": "11.5.0"
   }
 }

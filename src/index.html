@@ -2,12 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>AlgPip's Super Image Editor</title>
+    <link href="styles.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 
-<h1>hei3a</h1>
+<h1>heia</h1>
 
-<script src="index.js" ></script>
+<div class="ui">
+    <span class="group">
+        <select id="images">
+            <option>tower.jpg</option>
+            <option>earring.jpg</option>
+        </select>
+        <button id="load">Load / Reset</button>
+    </span>
+
+
+    <span class="group">
+        <button id="threshold">Threshold</button>
+        <input id="thresholdvalue" type="number" min="0" max="255" value="128"/>
+    </span>
+    <button id="greyscale">Greyscale</button>
+    <button id="colorfilter">Color</button>
+</div>
+
+<canvas id="original"></canvas>
+<canvas id="edited"></canvas>
+
+<canvas id="loaderCanvas" style="visibility: hidden"></canvas>
+
+<script src="index.js"></script>
 </body>
 </html>
