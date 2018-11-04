@@ -14,7 +14,7 @@ class Editor {
             const imageData = this.getImageData(loader);
             this.setNewImage(imageData);
         };
-        loader.src = '/' + imageName;
+        loader.src = imageName;
     }
 
     getImageData(loader) {
