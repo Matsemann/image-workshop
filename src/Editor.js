@@ -35,6 +35,7 @@ class Editor {
     setNewImage(image) {
         this.original = image;
         this.current = ImageData.clone(image);
+        this.olds = [this.current];
         this.render(this.original, "original");
         this.render(this.current, "edited");
     }
@@ -50,9 +51,19 @@ class Editor {
     }
 
     applyEffect(effect, ...args) {
-        this.current = effect(this.current, args[0]);
+        this.current = effect(ImageData.clone(this.current), ...args);
+        this.olds.push(this.current);
         this.render(this.current, "edited");
     }
+
+    undoEffect() {
+        if (this.olds.length > 1) {
+            this.olds.pop();
+            this.current = this.olds[this.olds.length - 1];
+            this.render(this.current, "edited");
+        }
+    }
+
 
 
 }

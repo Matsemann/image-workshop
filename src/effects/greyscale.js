@@ -1,6 +1,9 @@
 const Image = require('../Image');
 
 /**
+ * Takes an image with RGB values, and converts it to greyscale
+ * by calculating intensity at each pixel
+ *
  * @param image {Image}
  * @returns {Image}
  */

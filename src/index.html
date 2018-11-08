@@ -14,8 +14,10 @@
         <select id="images">
             <option>tower.jpg</option>
             <option>earring.jpg</option>
+            <option>simple.png</option>
         </select>
         <button id="load">Load / Reset</button>
+        <button id="undo">Undo effect</button>
     </span>
 
 
@@ -25,10 +27,24 @@
     </span>
     <button id="greyscale">Greyscale</button>
     <button id="colorfilter">Color</button>
+
+
+    <span class="group">
+        <button id="energy">Show energy</button>
+        <button id="findSeam">Find seam</button>
+        <button id="runSeamcarver">Remove seam</button>
+    </span>
 </div>
 
-<canvas id="original"></canvas>
+<span style="display: inline-block">
+    Edited:<br>
 <canvas id="edited"></canvas>
+</span>
+
+<span style="display: inline-block">
+    Original:<br>
+<canvas id="original"></canvas>
+</span>
 
 <canvas id="loaderCanvas" style="visibility: hidden"></canvas>
 

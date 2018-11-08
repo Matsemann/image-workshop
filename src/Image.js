@@ -93,8 +93,56 @@ function clone(image) {
 
 }
 
+
+class EnergyImage {
+    constructor(data32bit, width, height) {
+        this.data32bit = data32bit;
+        this.width = width;
+        this.height = height;
+    }
+
+    setValue(x, y, value) {
+        this.data32bit[this.getIndex(x, y)] = value;
+    }
+
+    getValue(x, y) {
+        return this.data32bit[this.getIndex(x, y)];
+    }
+
+    getIndex(x, y) {
+        if (x < 0 || x >= this.width) {
+            throw new Error("x " + x + " is not between 0 and " + this.width);
+        }else if (y < 0 || y >= this.height) {
+            throw new Error("y " + y + " is not between 0 and " + this.height);
+        }
+        return y * this.width + x;
+    }
+}
+
+function createEnergyImage(width, height) {
+    const buffer = new ArrayBuffer(width * height * 4);
+    const data32Bit = new Uint32Array(buffer);
+
+    return new EnergyImage(data32Bit, width, height);
+}
+/*
+function cloneEnergyImage(energyImage) {
+
+    const buffer = new ArrayBuffer(energyImage.width * energyImage.height * 4);
+    const data32Bit = new Uint32Array(buffer);
+
+    for (let i = 0; i < data32Bit.length; i++) {
+        data32Bit[i] = energyImage.data32bit[i];
+    }
+
+    return new EnergyImage(data32Bit, energyImage.width, energyImage.height);
+}*/
+
 module.exports = {
     Image,
     empty,
-    clone
+    clone,
+    EnergyImage,
+    createEnergyImage,
+    // cloneEnergyImage
 };
