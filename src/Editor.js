@@ -56,6 +56,12 @@ class Editor {
         this.render(this.current, "edited");
     }
 
+    setCurrent(image) {
+        this.current = image;
+        this.olds.push(this.current);
+        this.render(this.current, "edited");
+    }
+
     undoEffect() {
         if (this.olds.length > 1) {
             this.olds.pop();

@@ -43,14 +43,41 @@ document.querySelector("#findSeam").addEventListener('click', () => {
         return showSeam;
     });
 });
+
+
+let isRunning = false;
 document.querySelector("#runSeamcarver").addEventListener('click', () => {
-    editor.applyEffect((image) => {
+    isRunning = true;
+    document.querySelector("#runSeamcarver").disabled = true;
+    document.querySelector("#stopSeamcarver").disabled = false;
+
+    let image = editor.current;
+
+    function seamCarve() {
+
         const energy = seam.imageEnergy(image);
         const seams = seam.calculateSeams(energy);
         const minSeam = seam.findMinSeam(seams);
-        const newImage = seam.removeSeam(image, minSeam);
-        // const showSeam = seam.showSeam(image, minSeam);
-        return newImage;
-    });
+        const showSeam = seam.showSeam(image, minSeam);
+
+        editor.render(showSeam, "edited");
+
+        image = seam.removeSeam(image, minSeam);
+
+        if (isRunning) {
+            setTimeout(seamCarve, 10);
+        } else {
+            editor.setCurrent(image);
+        }
+    }
+
+    seamCarve();
 });
+
+document.querySelector("#stopSeamcarver").addEventListener('click', () => {
+    isRunning = false;
+    document.querySelector("#runSeamcarver").disabled = false;
+    document.querySelector("#stopSeamcarver").disabled = true;
+});
+
 

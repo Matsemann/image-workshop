@@ -32,6 +32,11 @@ function imageEnergy(image) {
     return energyImage;
 }
 
+function isBorderPixel(x, y, imageWidth, imageHeight) {
+    return x === 0 || x === imageWidth - 1 || y === 0 || y === imageHeight - 1;
+}
+
+
 /**
  * Takes an energyImage with energylevels per pixel, and uses dynamic programming
  * to find paths from top to bottom with the least energy
@@ -56,6 +61,10 @@ function calculateSeams(energyImage) {
     return seam;
 }
 
+/**
+ * After all the paths are calculated, find the lowest one on the last row
+ * and move back up, keeping track of the path
+ */
 function findMinSeam(seams) {
     const positions = [];
 
@@ -95,16 +104,14 @@ function findMinSeam(seams) {
     return positions;
 }
 
-function showSeam(image, seamPos) {
-    const newImage = Image.clone(image);
 
-    for (let y = 0; y < image.height; y++) {
-        newImage.setRGB(seamPos[y], y, [255, 0, 0]);
-    }
-
-    return newImage;
-}
-
+/**
+ * Creates a new image, one pixel smaller, that contains everything
+ * from the original image, except the pixel on each line found from seam carving to remove
+ * @param image {Image}
+ * @param seamPos {Number[]} x value for pixel to remove on each row
+ * @returns {Image}
+ */
 function removeSeam(image, seamPos) {
     const newImage = Image.empty(image.width - 1, image.height);
 
@@ -123,16 +130,23 @@ function removeSeam(image, seamPos) {
     return newImage;
 }
 
-/*
-    Util stuff
+/**
+ * Marks the found seam as a red path on the image
  */
+function showSeam(image, seamPos) {
+    const newImage = Image.clone(image);
 
-function isBorderPixel(x, y, imageWidth, imageHeight) {
-    return x === 0 || x === imageWidth - 1 || y === 0 || y === imageHeight - 1;
+    for (let y = 0; y < image.height; y++) {
+        newImage.setRGB(seamPos[y], y, [255, 0, 0]);
+    }
+
+    return newImage;
 }
 
-
-function energyImageToGreyscale(energy) {
+/**
+ * Util for showing the energy as greyscale image for debugging
+ */
+function showEnergyImage(energy) {
     const image = Image.empty(energy.width, energy.height);
 
     for (let x = 0; x < image.width; x++) {
@@ -148,7 +162,7 @@ function energyImageToGreyscale(energy) {
 
 module.exports = {
     imageEnergy,
-    energyImageToGreyscale,
+    showEnergyImage,
     calculateSeams,
     findMinSeam,
     showSeam,
