@@ -2,6 +2,7 @@ const Editor = require('./Editor');
 const greyscale = require('./effects/greyscale');
 const colorfilter = require('./effects/colorfilter');
 const threshold = require('./effects/threshold');
+const boxblur = require('./effects/boxblur');
 const seam = require('./effects/seamcarving');
 
 
@@ -27,6 +28,10 @@ document.querySelector("#greyscale").addEventListener('click', () => {
 
 document.querySelector("#colorfilter").addEventListener('click', () => {
     editor.applyEffect(colorfilter);
+});
+
+document.querySelector("#boxblur").addEventListener('click', () => {
+    editor.applyEffect(boxblur, document.querySelector("#blurradius").value);
 });
 
 document.querySelector("#energy").addEventListener('click', () => {
