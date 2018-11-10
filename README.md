@@ -123,17 +123,17 @@ uviktige delene av bildet og forkaster dette.
 
 Algoritmen består av 3 deler:
 1. Finn energien til hver piksel, altså hvor viktig den er i bildet
-2. Beregn forskjellige stier fra topp til bunn som har lavest energi, altså inneholder uviktige piksler
-3. Fjern pikslene i den stien som var minst viktig
+2. Beregn forskjellige stier fra topp til bunn og regn ut deres totale energi
+3. Fjern pikslene i den stien som var minst viktig (hadde lavest energi)
 
 Dette gjøres om og om igjen til bildet har den bredden man ønsker.
 
 I `src/effects/seamcarving.js` skal du implementere del 1 og 2. Del 3 er ikke så spennende og mest knot, så det får du av oss.
 
 **imageEnergy(..)**  
-Bildet vi skal returnere skal ikke ha RGB, men bare én verdi per piksel, så i stedet for å lage et nytt bilde, lager vi et
+Bildet vi skal returnere skal ikke ha RGB, men bare én verdi per piksel, så i stedet for å lage et nytt bilde kan vi heller lage et
 energyimage i riktig størrelse, ala `var energyImage = Image.createEnergyImage(image.width, image.height);`.
-Da kan vi sette energien på en piksel ved å gjøre `energyImage.setValue(x, y, 1000);`.
+Et energyimage er det samme som et vanlig image, men kan bare ha én verdi per piksel. Den kan vi sette ved å gjøre `energyImage.setValue(x, y, 1000);`.
 
 Vi må beregne energinivået til hver piksel. For å beregne det for en piksel, ser vi på pikslene rundt.
 For piksel `(x, y)`, er det pikselen over `(x, y-1)`, under `(x, y+1)`, venstre `(x-1, y)` og til høyre `(x+1, y)` vi må se på.
@@ -143,10 +143,10 @@ diffRx = (rHøyre - rVenstre)^2
 diffGx = (gHøyre - gVenstre)^2
 diffBx = (bHøyre - bVenstre)^2
 ```
-I kode vill det tilsvart `diffRx = Math.pow(image.getR(x+1, y) - image.getR(x-1, y), 2)`. Deretter gjør man det samme, men for pikselen under minus den over.
+I kode ville det tilsvart `diffRx = Math.pow(image.getR(x+1, y) - image.getR(x-1, y), 2)`. Deretter gjør man det samme, men for pikselen under minus den over.
 Når man har gjort det summerer man sammen alle 6 verdiene og tar roten av dem, ala `Math.sqrt(diffRx + diffGx + diffBx + diffRy + diffGy + diffBy)`.
 
-**Eksempel**
+**Eksempel**  
 Om det var litt forvirrende, har vi heldigvis et eksempel her. Vi skal beregne energien til pikselen i midten.
 
 | | | |
@@ -173,15 +173,16 @@ energien for den pikselen til en fast verdi. `300` f. eks.
 Her bruker vi dynamisk programmering for å finne den veien fra topp til bunn av bildet som har minst energi.
 Vi får inn energibildet vi akkurat regnet ut, og skal nå summere verdiene nedover for å beregne totalenergien for de forskjellige veiene man kan velge.
 
-En path/vei er sammenhengende, og kan enten komme fra pikselen rett over, eller de to pikslene ved siden av den.
+En path/vei er sammenhengende, og kan enten komme fra pikselen rett over, den skrått oppover til venstre, eller den skrått oppover til høyre.
 
-**Eksempel**
+**Eksempel**:  
 ![bilde fra wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/DynamicProgrammingLeastEnergyPathA.svg/399px-DynamicProgrammingLeastEnergyPathA.svg.png)
 
 De røde verdiene er energiverdiene vi allerede har beregnet, mens vi skal fylle ut nye verdier.
-Første rad er grei, de får bare samme verdi som energibildet hadde. For rad to, starter vi helt til venstre. Siden den er på kanten,
-har den to muligheter. Enten komme fra rett over (1), eller den til høyre for det (4). 1 < 4, så vi velger 1, og legger til energien den pikselen hadde fra
+Første rad er grei, de får bare samme verdi som energibildet hadde. For rad to, starter vi helt til venstre og finner billigste path ned til pikselen så langt, og legger til energien til den pikselen. 
+Siden første er på kanten har den to muligheter. Enten komme fra rett over (1), eller den til høyre for det (4). 1 < 4, så vi velger 1, og legger til energien den pikselen hadde fra
 energibildet (3). Altså får den verdien 4. For neste piksel, kan den velge mellom (1), (4) og (3). Vi velger 1, plusser på verdien 2, og får 3. Slik fortsetter vi.
+For første piksel på rad 3, kan man velge mellom (4) og (3). Vi velger 3 og plusser på 5 og får da 8.
 
 Algoritmen er litt forenklet (man må ta hensyn til om man er på kanten)
 ```javascript
