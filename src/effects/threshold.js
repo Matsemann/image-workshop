@@ -1,15 +1,14 @@
 const Image = require('../Image');
 
 /**
- * Takes an image with RGB values, and turns all pixels either white (255,255,255) or black (0,0,0)
- * depending on if the intensity is above the threshold
+ * Takes an image with RGB values, and turns the pixels either white (255,255,255) or black (0,0,0)
+ * depending on if the intensity is above or below the threshold
  *
  * @param image {Image}
  * @param threshold Number
  * @returns {Image}
  */
 function threshold(image, threshold) {
-    console.log(threshold);
     const newImage = Image.empty(image.width, image.height);
 
     for (let x = 0; x < image.width; x++) {

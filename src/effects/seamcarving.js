@@ -8,8 +8,8 @@ const Image = require('../Image');
 function imageEnergy(image) {
     const energyImage = Image.createEnergyImage(image.width, image.height);
 
-    for (let x = 0; x < image.width; x++) {
-        for (let y = 0; y < image.height; y++) {
+    for (let y = 0; y < image.height; y++) {
+        for (let x = 0; x < image.width; x++) {
             let energy;
             if (isBorderPixel(x, y, image.width, image.height)) {
                 energy = 300;
@@ -122,7 +122,7 @@ function removeSeam(image, seamPos) {
             if (x < xToRemove) {
                 newImage.setRGB(x, y, image.getRGB(x, y));
             } else {
-                newImage.setRGB(x, y, image.getRGB(x+1, y));
+                newImage.setRGB(x, y, image.getRGB(x + 1, y));
             }
 
         }
