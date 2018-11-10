@@ -31,7 +31,7 @@ document.querySelector("#colorfilter").addEventListener('click', () => {
 
 document.querySelector("#energy").addEventListener('click', () => {
     editor.applyEffect((image) => {
-        return seam.energyImageToGreyscale(seam.imageEnergy(image));
+        return seam.showEnergyImage(seam.imageEnergy(image));
     });
 });
 document.querySelector("#findSeam").addEventListener('click', () => {
