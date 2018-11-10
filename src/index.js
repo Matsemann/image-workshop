@@ -3,6 +3,9 @@ const greyscale = require('./effects/greyscale');
 const colorfilter = require('./effects/colorfilter');
 const threshold = require('./effects/threshold');
 const boxblur = require('./effects/boxblur');
+const invert = require('./effects/invert');
+const histogramequalization = require('./effects/histogramequalization');
+const medianfilter = require('./effects/medianfilter');
 const seam = require('./effects/seamcarving');
 
 
@@ -32,6 +35,18 @@ document.querySelector("#colorfilter").addEventListener('click', () => {
 
 document.querySelector("#boxblur").addEventListener('click', () => {
     editor.applyEffect(boxblur, document.querySelector("#blurradius").value);
+});
+
+document.querySelector("#medianfilter").addEventListener('click', () => {
+    editor.applyEffect(medianfilter, document.querySelector("#radius").value);
+});
+
+document.querySelector("#invert").addEventListener('click', () => {
+    editor.applyEffect(invert);
+});
+
+document.querySelector("#histogramequalization").addEventListener('click', () => {
+    editor.applyEffect(histogramequalization);
 });
 
 document.querySelector("#energy").addEventListener('click', () => {
