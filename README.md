@@ -86,6 +86,7 @@ Kan se fasit (/få hjelp) ved å sjekke ut branchen `solution`, evt klikke [her]
 
 [Greyscale](#Greyscale) (enkel)  
 [Threshold](#Threshold) (enkel)  
+[Warmfilter](#Warmfilter) (enkel)  
 [Seam carving](#Seam-carving) (avansert)
 
 
@@ -113,9 +114,18 @@ setter man enten fargen til svart (0,0,0) eller hvitt (255,255,255) basert på o
 
 Endre på fila `src/effects/threshold.js`. I tillegg til bildet effekten skal legges på, får du inn grenseverdien for om hver piksel skal bli hvit eller svart.
 
+## Warmfilter
+
+![warmfilter](docs/examples/warmfilter.png)
+
+Gjør bildet varmere ved å legge til litt rød og trekke fra litt blå. Endre på fila `src/effects/warmfilter.js`. 
+Lag et nytt blankt bilde på størrelse med bildet du får inn, og iterer over alle pikslene. For hver piksel,
+les ut RGB verdiene fra bildet du fikk inn. Men i stedet for å kopiere verdiene direkte over til det nye bildet, legger du til litt (f eks +25)  på rødverdien,
+og trekker til litt på blåverdien (feks -25).
+
 ## Seam carving
 
-![threshold](docs/examples/seamcarving.png)
+![seamcarving](docs/examples/seamcarving.png)
 
 Når man skalerer bilder ned i én akse, får man et problem med at ting blir skvist/strukket ut av sine egentlige proposjoner.
 Seam carving løser dette ved at i stedet for å skalere ned hele bildet jevnt, finner man heller de 

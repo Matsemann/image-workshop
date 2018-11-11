@@ -1,6 +1,6 @@
 const Editor = require('./Editor');
 const greyscale = require('./effects/greyscale');
-const colorfilter = require('./effects/colorfilter');
+const colorfilter = require('./effects/warmfilter');
 const threshold = require('./effects/threshold');
 const boxblur = require('./effects/boxblur');
 const invert = require('./effects/invert');
@@ -30,7 +30,7 @@ document.querySelector("#greyscale").addEventListener('click', () => {
     editor.applyEffect(greyscale);
 });
 
-document.querySelector("#colorfilter").addEventListener('click', () => {
+document.querySelector("#warmfilter").addEventListener('click', () => {
     editor.applyEffect(colorfilter);
 });
 
