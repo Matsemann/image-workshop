@@ -86,12 +86,12 @@ Kan se fasit (/få hjelp) ved å sjekke ut branchen `solution`, evt klikke [her]
 
 [Greyscale](#Greyscale) (liten)  
 [Threshold](#Threshold) (liten)  
-[Invert](#Invert) (liten)
+[Invert](#Invert) (liten)  
 [Warmfilter](#Warmfilter) (liten)  
-[Blur](#Blur) (middels)
-[Median filter](#Median-filter) (middels)
-[Sharpen](#Sharpen) (liten, men avhengig av èn av de to foregående)
-[Histogram equalization](#Histogram-equalization) (middels)
+[Blur](#Boxblur) (middels)  
+[Median filter](#Median-filter) (middels)  
+[Sharpen](#Sharpen) (liten, men avhengig av èn av de to foregående)  
+[Histogram equalization](#Histogram-equalization) (middels)  
 [Seam carving](#Seam-carving) (stor)
 
 
