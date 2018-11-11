@@ -1,5 +1,9 @@
 const Image = require('../Image');
 
+/*
+ * IMPLEMENT imageEnergy(..) and calculateSeams(..) functions
+ */
+
 /**
  * Takes an RGB image, returns a new image with energylevels per pixel
  * @param image {Image}
@@ -43,23 +47,31 @@ function isBorderPixel(x, y, imageWidth, imageHeight) {
  * @param energyImage {EnergyImage}
  */
 function calculateSeams(energyImage) {
-    const seam = Image.createEnergyImage(energyImage.width, energyImage.height);
+    const seamImage = Image.createEnergyImage(energyImage.width, energyImage.height);
 
-    for (let y = 0; y < seam.height; y++) {
-        for (let x = 0; x < seam.width; x++) {
+    for (let y = 0; y < seamImage.height; y++) {
+        for (let x = 0; x < seamImage.width; x++) {
             const energyAtPx = energyImage.getValue(x, y);
 
             if (y === 0) {
-                seam.setValue(x, y, energyAtPx);
+                seamImage.setValue(x, y, energyAtPx);
                 continue;
             }
 
-            const minParent = Math.min(x - 1 >= 0 ? seam.getValue(x - 1, y - 1) : 99999, seam.getValue(x, y - 1), x + 1 < seam.width ? seam.getValue(x + 1, y - 1) : 99999);
-            seam.setValue(x, y, energyAtPx + minParent);
+            const minParent = Math.min(x - 1 >= 0 ? seamImage.getValue(x - 1, y - 1) : 99999, seamImage.getValue(x, y - 1), x + 1 < seamImage.width ? seamImage.getValue(x + 1, y - 1) : 99999);
+            seamImage.setValue(x, y, energyAtPx + minParent);
         }
     }
-    return seam;
+    return seamImage;
 }
+
+
+/*
+ *
+ * STUFF below already implemented for you :)
+ *
+ */
+
 
 /**
  * After all the paths are calculated, find the lowest one on the last row
@@ -132,6 +144,7 @@ function removeSeam(image, seamPos) {
 
 /**
  * Marks the found seam as a red path on the image
+ * Not part of the algorithm, just used to show in the UI / debugging
  */
 function showSeam(image, seamPos) {
     const newImage = Image.clone(image);
@@ -144,7 +157,8 @@ function showSeam(image, seamPos) {
 }
 
 /**
- * Util for showing the energy as greyscale image for debugging
+ * Showing the energy as greyscale image for debugging
+ * Not part of the algorithm, just to show in the UI / debugging
  */
 function showEnergyImage(energy) {
     const image = Image.empty(energy.width, energy.height);

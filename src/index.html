@@ -11,43 +11,52 @@
 <a href="https://github.com/Matsemann/image-workshop">Se oppgavene / implementasjonen her</a>
 
 <div class="ui">
-    <span class="group">
-        <select id="images">
-            <option>tower.jpg</option>
-            <option>earring.jpg</option>
-            <option>simple.png</option>
-            <option>low-contrast.png</option>
-            <option>noisy.png</option>
-        </select>
-        <button id="load">Load / Reset</button>
-        <button id="undo">Undo effect</button>
-    </span>
+    <div class="uirow">
+        <span class="group">
+            <select id="images">
+                <option>tower.jpg</option>
+                <option>earring.jpg</option>
+                <option>simple.png</option>
+                <option>low-contrast.png</option>
+                <option>noisy.png</option>
+                <option>supernoisy.jpg</option>
+            </select>
+            <button id="load">Reset image</button>
+            <button id="undo">Undo effect</button>
+        </span>
+    </div>
 
+    <div class="uirow">
+        <button id="greyscale" class="notgroup">Greyscale</button>
+        <span class="group">
+            <button id="threshold">Threshold</button>
+            <input id="thresholdvalue" type="number" min="0" max="255" value="128"/>
+        </span>
+        <button id="invert" class="notgroup">Invert</button>
+        <button id="warmfilter" class="notgroup">Warm</button>
+    </div>
 
-    <span class="group">
-        <button id="threshold">Threshold</button>
-        <input id="thresholdvalue" type="number" min="0" max="255" value="128"/>
-    </span>
-    <button id="greyscale">Greyscale</button>
-    <button id="colorfilter">Color</button>
-    <button id="sharpen">Sharpen</button>
-    <span class="group">
-        <button id="boxblur">Boxblur</button>
-        <input id="blurradius" type="number" min="1" max="30" value="1"/>
-    </span>
-    <span class="group">
-        <button id="medianfilter">Median filter</button>
-        <input id="radius" type="number" min="1" max="30" value="3"/>
-    </span>
-    <button id="invert">Invert</button>
-    <button id="histogramequalization">Histogram equalization</button>
+    <div class="uirow">
+        <span class="group">
+            <button id="boxblur">Boxblur</button>
+            <input id="blurradius" type="number" min="1" max="30" value="1"/>
+        </span>
+        <button id="sharpen" class="notgroup">Sharpen</button>
+        <span class="group">
+            <button id="medianfilter">Median filter</button>
+            <input id="radius" type="number" min="1" max="30" value="3"/>
+        </span>
+        <button id="histogramequalization" class="notgroup">Histogram equalization</button>
+    </div>
 
-    <span class="group">
-        <button id="energy">Show energy</button>
-        <button id="findSeam">Show seam</button>
-        <button id="runSeamcarver">Run seam carving</button>
-        <button id="stopSeamcarver" disabled>Stop</button>
-    </span>
+    <div class="uirow">
+        <span class="group">
+            <button id="energy">Show energy</button>
+            <button id="findSeam">Show seam</button>
+            <button id="runSeamcarver">Run seam carving</button>
+            <button id="stopSeamcarver" disabled>Stop</button>
+        </span>
+    </div>
 </div>
 
 <span style="display: inline-block">

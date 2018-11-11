@@ -1,6 +1,6 @@
 const Editor = require('./Editor');
 const greyscale = require('./effects/greyscale');
-const colorfilter = require('./effects/colorfilter');
+const colorfilter = require('./effects/warmfilter');
 const threshold = require('./effects/threshold');
 const boxblur = require('./effects/boxblur');
 const invert = require('./effects/invert');
@@ -12,6 +12,11 @@ const seam = require('./effects/seamcarving');
 
 const editor = new Editor();
 editor.loadImage('tower.jpg');
+
+document.querySelector("#images").addEventListener('change', () => {
+    const selectedImage = document.querySelector("#images").value;
+    editor.loadImage(selectedImage);
+});
 
 document.querySelector("#load").addEventListener('click', () => {
     const selectedImage = document.querySelector("#images").value;
@@ -30,7 +35,7 @@ document.querySelector("#greyscale").addEventListener('click', () => {
     editor.applyEffect(greyscale);
 });
 
-document.querySelector("#colorfilter").addEventListener('click', () => {
+document.querySelector("#warmfilter").addEventListener('click', () => {
     editor.applyEffect(colorfilter);
 });
 

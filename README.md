@@ -84,9 +84,15 @@ varierer mellom de forskjellige.
 
 Kan se fasit (/få hjelp) ved å sjekke ut branchen `solution`, evt klikke [her](https://github.com/Matsemann/image-workshop/tree/solution/src/effects)
 
-[Greyscale](#Greyscale) (enkel)  
-[Threshold](#Threshold) (enkel)  
-[Seam carving](#Seam-carving) (avansert)
+[Greyscale](#Greyscale) (liten)  
+[Threshold](#Threshold) (liten)  
+[Invert](#Invert) (liten)
+[Warmfilter](#Warmfilter) (liten)  
+[Blur](#Blur) (middels)
+[Median filter](#Median filter) (middels)
+[Sharpen](#Sharpen) (liten, men avhengig av èn av de to foregående)
+[Histogram equalization](#Histogram equalization) (middels)
+[Seam carving](#Seam-carving) (stor)
 
 
 ## Greyscale
@@ -121,18 +127,76 @@ Rett og slett invertering av fargene, 255 - c, der c er intensiteten per pixel p
 
 Endre på fila `src/effects/invert.js`.
 
+## Warmfilter
+
+![warmfilter](docs/examples/warmfilter.png)
+
+Gjør bildet varmere ved å legge til litt rød og trekke fra litt blå. Endre på fila `src/effects/warmfilter.js`. 
+Lag et nytt blankt bilde på størrelse med bildet du får inn, og iterer over alle pikslene. For hver piksel,
+les ut RGB verdiene fra bildet du fikk inn. Men i stedet for å kopiere verdiene direkte over til det nye bildet, legger du til litt (f eks +25)  på rødverdien,
+og trekker til litt på blåverdien (feks -25).
 
 ## Boxblur
 
 ![threshold](docs/examples/boxblur.png)
 
-Rett og slett invertering av fargene, 255 - c, der c er intensiteten per pixel per farge. Brukes hyppig i flashes i skrekkfilmer.
+Dette er gode gamle blur som mange har minner fra i photoshop. Det finnes mange måter å implementere blur på, men vi har
+valgt det aller enkleste tilfellet, nemlig å sette hver pixel til å være gjennomsnittet av pixlene rundt. Vi sier ofte
+at vi beregner verdien basert på et *omegn* av hver verdi. Denne måten å behandle bilder på kalles *spatial filtering*,
+og box blur er et såkalt *lavpassfilter**. I vår implemetasjon sender man med hvor stor radius rundt hver pixel som skal
+være beregningsgrunnlaget. Dvs. at sender vi med 1, så er omegnet et 3x3-grid, sender vi med 2, er omegnet et 5x5-grid. 
 
-Endre på fila `src/effects/invert.js`.
+Endre på fila `src/effects/boxblur.js`.
+
+## Median filter
+
+![threshold](docs/examples/medianfilter.png)
+
+Medianfilteret er en veldig god støyreduserer, og har veldig lik implementasjon som blur, bare at man setter hver pixel
+til å være medianen av omegnet i stedet for gjennomsnittet.
+
+Endre på fila `src/effects/medianfilter.js`.
+
+## Sharpen
+
+![threshold](docs/examples/sharpen.png)
+
+Krever at man har implementert enten blur eller medianfilter (eller et annet lavpassfilter!).
+
+En enkel sharpen-funksjon er å ta differansen mellom et bilde og den lavpassfiltrerte versjonen av bildet, for så å
+legge til differansen på orignalbildet igjen.
+
+`diff = originalbilde - lavpass(originalbilde)`
+`sharpened_originalbilde = orignalbilde + diff`.
+
+Hvorfor fungerer dette? Når vi trekker et utjevnet bilde fra originalen, står vi igjen med høye verdier i de pixlene som
+har blitt utjevnet mye, altså de pixlene som skiller seg ut fra nabopixlene. Når vi så legger dette på originalbildet igjen, 
+vil de homogene områdene forbli de samme (fordi differansen er ~0 der), mens vi får utslag der det er kanter e.l. 
+
+Endre på fila `src/effects/sharpen.js`.
+
+## Histogram equalization
+
+![threshold](docs/examples/histogramequalization.png)
+
+Histogram equalization dreier seg om å utjevne spekteret av intensitetsverdier man bruker i et bilde. Enklere forklart,
+dersom man har et bilde som er lite kontrastfylt, f. eks et veldig lyst bilde, så gir man bildet mer kontrast.
+
+Det som skjer er at vi for hver pixel og farge gjør en mapping til en ny verdi. Lang historie kort, formelen er på
+følgende format. Hver intensitetsverdi `k` skal mappes til verdien `ny_k` (0 til 255). `ny_k` er på
+formen (se bildet):
+
+![threshold](docs/examples/skformula.png)
+
+Der `L-1 = 255`, `MN = image.height*image.width` og `n_j`er antallet pixler i bildet som har intensitetsverdi `j` (mellom 0 og 255). 
+
+
+Endre på fila `src/effects/histogramequalization.js`.
+
 
 ## Seam carving
 
-![threshold](docs/examples/seamcarving.png)
+![seamcarving](docs/examples/seamcarving.png)
 
 Når man skalerer bilder ned i én akse, får man et problem med at ting blir skvist/strukket ut av sine egentlige proposjoner.
 Seam carving løser dette ved at i stedet for å skalere ned hele bildet jevnt, finner man heller de 
@@ -193,15 +257,16 @@ Vi får inn energibildet vi akkurat regnet ut, og skal nå summere verdiene nedo
 En path/vei er sammenhengende, og kan enten komme fra pikselen rett over, den skrått oppover til venstre, eller den skrått oppover til høyre.
 
 **Eksempel**:  
-![bilde fra wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/DynamicProgrammingLeastEnergyPathA.svg/399px-DynamicProgrammingLeastEnergyPathA.svg.png)
+![bilde](docs/examples/seamcarvedynamicprogramming.png)
 
-De røde verdiene er energiverdiene vi allerede har beregnet, mens vi skal fylle ut nye verdier.
-Første rad er grei, de får bare samme verdi som energibildet hadde. For rad to, starter vi helt til venstre og finner billigste path ned til pikselen så langt, og legger til energien til den pikselen. 
-Siden første er på kanten har den to muligheter. Enten komme fra rett over (1), eller den til høyre for det (4). 1 < 4, så vi velger 1, og legger til energien den pikselen hadde fra
-energibildet (3). Altså får den verdien 4. For neste piksel, kan den velge mellom (1), (4) og (3). Vi velger 1, plusser på verdien 2, og får 3. Slik fortsetter vi.
-For første piksel på rad 3, kan man velge mellom (4) og (3). Vi velger 3 og plusser på 5 og får da 8.
+Verdiene i EnergyImage til venstre er de vi beregnet i forrige steg, og får som input til vår funksjon. Etter at funksjonen vår har kjørt,
+skal vi returnere et nytt bilde med verdier tilsvarende det i høyre bilde. Algoritmen er som følger:
+For første rad, kopier over verdiene som energibildet hadde. For de andre radene, finner vi billigste path til den pikselen vi ser på ovenifra, og legger til verdien til pikselen fra energibildet.
+For eksempel om vi ser på ruten med pilene: For den pikselen ser vi på de 3 pikslene ovenfor. Av 4, 3 og 5 er 3 lavest. Så ser vi på energibildet, der har den pikselen verdien 5. Vi summerer da 3 og 5 og får verdien 8.
+Vi gjør dette for alle piksler på rad to, før vi så gjør det samme for rad 3. Da finner vi den laveste av de over på rad 2.
+Merk at på kanten har vi bare to over oss. F. eks. nederst i venstre hjørne er det det laveste av 4 og 3, plusset på 5, som blir verdien.
 
-Algoritmen er litt forenklet (man må ta hensyn til om man er på kanten)
+Algoritmen er litt forenklet for hver piksel (man må ta hensyn til om man er på kanten):
 ```javascript
 seamValue = Math.min(
     energyImage.getValue(x-1, y-1),
@@ -210,5 +275,10 @@ seamValue = Math.min(
 )
 seamImage.setValue(x, y, seamValue);
 ```
+Dette gjøres da først for alle pikslene på en rad, så raden under osv.
+
+
+(* Lavpassfilter er et type filter som jevner ut forskjeller. Motsetningen er høypassfilter, som fremhever forskjeller. 
+Både blur og median filter er lavpassfiltre. Et filter som beregner den andrederiverte er et eksempel på et høypassfilter.)
 
 
