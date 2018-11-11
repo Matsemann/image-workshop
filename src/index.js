@@ -13,6 +13,11 @@ const seam = require('./effects/seamcarving');
 const editor = new Editor();
 editor.loadImage('tower.jpg');
 
+document.querySelector("#images").addEventListener('change', () => {
+    const selectedImage = document.querySelector("#images").value;
+    editor.loadImage(selectedImage);
+});
+
 document.querySelector("#load").addEventListener('click', () => {
     const selectedImage = document.querySelector("#images").value;
     editor.loadImage(selectedImage);

@@ -186,15 +186,16 @@ Vi får inn energibildet vi akkurat regnet ut, og skal nå summere verdiene nedo
 En path/vei er sammenhengende, og kan enten komme fra pikselen rett over, den skrått oppover til venstre, eller den skrått oppover til høyre.
 
 **Eksempel**:  
-![bilde fra wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/DynamicProgrammingLeastEnergyPathA.svg/399px-DynamicProgrammingLeastEnergyPathA.svg.png)
+![bilde](docs/examples/seamcarvedynamicprogramming.png)
 
-De røde verdiene er energiverdiene vi allerede har beregnet, mens vi skal fylle ut nye verdier.
-Første rad er grei, de får bare samme verdi som energibildet hadde. For rad to, starter vi helt til venstre og finner billigste path ned til pikselen så langt, og legger til energien til den pikselen. 
-Siden første er på kanten har den to muligheter. Enten komme fra rett over (1), eller den til høyre for det (4). 1 < 4, så vi velger 1, og legger til energien den pikselen hadde fra
-energibildet (3). Altså får den verdien 4. For neste piksel, kan den velge mellom (1), (4) og (3). Vi velger 1, plusser på verdien 2, og får 3. Slik fortsetter vi.
-For første piksel på rad 3, kan man velge mellom (4) og (3). Vi velger 3 og plusser på 5 og får da 8.
+Verdiene i EnergyImage til venstre er de vi beregnet i forrige steg, og får som input til vår funksjon. Etter at funksjonen vår har kjørt,
+skal vi returnere et nytt bilde med verdier tilsvarende det i høyre bilde. Algoritmen er som følger:
+For første rad, kopier over verdiene som energibildet hadde. For de andre radene, finner vi billigste path til den pikselen vi ser på ovenifra, og legger til verdien til pikselen fra energibildet.
+For eksempel om vi ser på ruten med pilene: For den pikselen ser vi på de 3 pikslene ovenfor. Av 4, 3 og 5 er 3 lavest. Så ser vi på energibildet, der har den pikselen verdien 5. Vi summerer da 3 og 5 og får verdien 8.
+Vi gjør dette for alle piksler på rad to, før vi så gjør det samme for rad 3. Da finner vi den laveste av de over på rad 2.
+Merk at på kanten har vi bare to over oss. F. eks. nederst i venstre hjørne er det det laveste av 4 og 3, plusset på 5, som blir verdien.
 
-Algoritmen er litt forenklet (man må ta hensyn til om man er på kanten)
+Algoritmen er litt forenklet for hver piksel (man må ta hensyn til om man er på kanten):
 ```javascript
 seamValue = Math.min(
     energyImage.getValue(x-1, y-1),
@@ -203,5 +204,6 @@ seamValue = Math.min(
 )
 seamImage.setValue(x, y, seamValue);
 ```
+Dette gjøres da først for alle pikslene på en rad, så raden under osv.
 
 
