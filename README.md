@@ -166,7 +166,7 @@ Krever at man har implementert enten blur eller medianfilter (eller et annet lav
 En enkel sharpen-funksjon er å ta differansen mellom et bilde og den lavpassfiltrerte versjonen av bildet, for så å
 legge til differansen på orignalbildet igjen.
 
-`diff = originalbilde - lavpass(originalbilde)`
+`diff = originalbilde - lavpass(originalbilde)`,  
 `sharpened_originalbilde = orignalbilde + diff`.
 
 Hvorfor fungerer dette? Når vi trekker et utjevnet bilde fra originalen, står vi igjen med høye verdier i de pixlene som
