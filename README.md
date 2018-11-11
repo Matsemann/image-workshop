@@ -84,10 +84,10 @@ varierer mellom de forskjellige.
 
 Kan se fasit (/få hjelp) ved å sjekke ut branchen `solution`, evt klikke [her](https://github.com/Matsemann/image-workshop/tree/solution/src/effects)
 
-[Greyscale](#Greyscale) (enkel)  
-[Threshold](#Threshold) (enkel)  
-[Warmfilter](#Warmfilter) (enkel)  
-[Seam carving](#Seam-carving) (avansert)
+[Greyscale](#Greyscale) (liten)  
+[Threshold](#Threshold) (liten)  
+[Warmfilter](#Warmfilter) (liten)  
+[Seam carving](#Seam-carving) (stor)
 
 
 ## Greyscale
