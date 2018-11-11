@@ -6,6 +6,7 @@ const boxblur = require('./effects/boxblur');
 const invert = require('./effects/invert');
 const histogramequalization = require('./effects/histogramequalization');
 const medianfilter = require('./effects/medianfilter');
+const sharpen = require('./effects/sharpen');
 const seam = require('./effects/seamcarving');
 
 
@@ -43,6 +44,10 @@ document.querySelector("#medianfilter").addEventListener('click', () => {
 
 document.querySelector("#invert").addEventListener('click', () => {
     editor.applyEffect(invert);
+});
+
+document.querySelector("#sharpen").addEventListener('click', () => {
+    editor.applyEffect(sharpen);
 });
 
 document.querySelector("#histogramequalization").addEventListener('click', () => {

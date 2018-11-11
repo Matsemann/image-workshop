@@ -1,9 +1,6 @@
 const Image = require('../Image');
 
 /**
- * Takes an image with RGB values, and turns all pixels either white (255,255,255) or black (0,0,0)
- * depending on if the intensity is above the threshold
- *
  * @param image {Image}
  * @returns {Image}
  */
