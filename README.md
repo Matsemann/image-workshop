@@ -188,7 +188,7 @@ formen (se bildet):
 
 ![threshold](docs/examples/skformula.png)
 
-Der `L-1 = 255`, `MN = image.height*image.width` og `n_j`er antallet pixler i bildet som har intensitetsverdi `j` (mellom 0 og 255). 
+Der `L-1 = 255`, `MN = image.height*image.width` og `n_j`er antallet pixler i bildet som har intensitetsverdi `j` (mellom 0 og `k`). 
 
 
 Endre på fila `src/effects/histogramequalization.js`.
