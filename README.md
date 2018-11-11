@@ -113,6 +113,23 @@ setter man enten fargen til svart (0,0,0) eller hvitt (255,255,255) basert på o
 
 Endre på fila `src/effects/threshold.js`. I tillegg til bildet effekten skal legges på, får du inn grenseverdien for om hver piksel skal bli hvit eller svart.
 
+## Invert
+
+![threshold](docs/examples/invert.png)
+
+Rett og slett invertering av fargene, 255 - c, der c er intensiteten per pixel per farge. Brukes hyppig i flashes i skrekkfilmer.
+
+Endre på fila `src/effects/invert.js`.
+
+
+## Boxblur
+
+![threshold](docs/examples/boxblur.png)
+
+Rett og slett invertering av fargene, 255 - c, der c er intensiteten per pixel per farge. Brukes hyppig i flashes i skrekkfilmer.
+
+Endre på fila `src/effects/invert.js`.
+
 ## Seam carving
 
 ![threshold](docs/examples/seamcarving.png)
