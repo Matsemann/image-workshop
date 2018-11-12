@@ -15,20 +15,8 @@ function imageEnergy(image) {
     for (let y = 0; y < image.height; y++) {
         for (let x = 0; x < image.width; x++) {
             let energy;
-            if (isBorderPixel(x, y, image.width, image.height)) {
-                energy = 300;
-            } else {
-                energy = Math.sqrt(
-                    Math.pow(image.getR(x + 1, y) - image.getR(x - 1, y), 2) +
-                    Math.pow(image.getG(x + 1, y) - image.getG(x - 1, y), 2) +
-                    Math.pow(image.getB(x + 1, y) - image.getB(x - 1, y), 2) +
 
-                    Math.pow(image.getR(x, y + 1) - image.getR(x, y - 1), 2) +
-                    Math.pow(image.getG(x, y + 1) - image.getG(x, y - 1), 2) +
-                    Math.pow(image.getB(x, y + 1) - image.getB(x, y - 1), 2)
-                );
-
-            }
+            // Calculate energy for the pixel
 
             energyImage.setValue(x, y, energy);
         }
@@ -49,19 +37,8 @@ function isBorderPixel(x, y, imageWidth, imageHeight) {
 function calculateSeams(energyImage) {
     const seamImage = Image.createEnergyImage(energyImage.width, energyImage.height);
 
-    for (let y = 0; y < seamImage.height; y++) {
-        for (let x = 0; x < seamImage.width; x++) {
-            const energyAtPx = energyImage.getValue(x, y);
+    // iterate over all rows and columns and calculate the cheapest way to get to the current pixel
 
-            if (y === 0) {
-                seamImage.setValue(x, y, energyAtPx);
-                continue;
-            }
-
-            const minParent = Math.min(x - 1 >= 0 ? seamImage.getValue(x - 1, y - 1) : 99999, seamImage.getValue(x, y - 1), x + 1 < seamImage.width ? seamImage.getValue(x + 1, y - 1) : 99999);
-            seamImage.setValue(x, y, energyAtPx + minParent);
-        }
-    }
     return seamImage;
 }
 

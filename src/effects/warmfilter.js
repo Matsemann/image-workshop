@@ -8,18 +8,8 @@ const Image = require('../Image');
 function warmfilter(image) {
     const newImage = Image.empty(image.width, image.height);
 
-    for (let x = 0; x < image.width; x++) {
-        for (let y = 0; y < image.height; y++) {
+    // Iterate over all pixels and tweak the color values
 
-            const r = image.getR(x, y);
-            const g = image.getG(x, y);
-            const b = image.getB(x, y);
-
-            newImage.setR(x, y, r + 25);
-            newImage.setG(x, y, g);
-            newImage.setB(x, y, b - 25);
-        }
-    }
     return newImage;
 }
 

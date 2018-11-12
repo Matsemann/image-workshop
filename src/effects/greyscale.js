@@ -10,25 +10,8 @@ const Image = require('../Image');
 function greyscale(image) {
     const newImage = Image.empty(image.width, image.height);
 
-    for (let y = 0; y < image.height; y++) {
-        for (let x = 0; x < image.width; x++) {
+    // Iterate over all pixels and calculate the intensity
 
-            const r = image.getR(x, y);
-            const g = image.getG(x, y);
-            const b = image.getB(x, y);
-
-            const intensity = 0.34 * r + 0.5 * g + 0.16 * b;
-
-            newImage.setR(x, y, intensity);
-            newImage.setG(x, y, intensity);
-            newImage.setB(x, y, intensity);
-
-            /* evt
-            const [r, g, b] = image.getRGB(x, y);
-            const c = 0.34 * r + 0.5 * g + 0.16 * b;
-            newImage.setRGB(x, y, [c, c, c]);*/
-        }
-    }
     return newImage;
 }
 
