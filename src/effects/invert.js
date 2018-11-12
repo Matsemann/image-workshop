@@ -9,16 +9,8 @@ const Image = require('../Image');
 function invert(image) {
     const newImage = Image.empty(image.width, image.height);
 
-    for (let x = 0; x < image.width; x++) {
-        for (let y = 0; y < image.height; y++) {
+    // Invert the value of each pixel
 
-            const r = 255 - image.getR(x, y);
-            const g = 255 - image.getG(x, y);
-            const b = 255 - image.getB(x, y);
-
-            newImage.setRGB(x, y, [r, g, b]);
-        }
-    }
     return newImage;
 }
 
