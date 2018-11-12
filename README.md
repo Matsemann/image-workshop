@@ -146,7 +146,8 @@ at vi beregner verdien basert på et *omegn* av hver verdi. Denne måten å beha
 og box blur er et såkalt *lavpassfilter**. I vår implemetasjon sender man med hvor stor radius rundt hver pixel som skal
 være beregningsgrunnlaget. Dvs. at sender vi med 1, så er omegnet et 3x3-grid, sender vi med 2, er omegnet et 5x5-grid. 
 
-Endre på fila `src/effects/boxblur.js`.
+Endre på fila `src/effects/boxblur.js`. Iterer over alle pikslene, og for hver piksel må du finne pikslene i en radius rundt og summere opp RGB-verdiene for å regne ut snittet for hver farge.
+Sett deretter fargen på pikselen til å være disse snittene av RGB. For å iterere over alle naboene, kan du bruke en dobbel for-løkke, der man går `(fra x-radius til og med x+radius)` og tilsvarende for y.
 
 ## Median filter
 
@@ -155,7 +156,8 @@ Endre på fila `src/effects/boxblur.js`.
 Medianfilteret er en veldig god støyreduserer, og har veldig lik implementasjon som blur, bare at man setter hver pixel
 til å være medianen av omegnet i stedet for gjennomsnittet.
 
-Endre på fila `src/effects/medianfilter.js`.
+Endre på fila `src/effects/medianfilter.js`. Gjør som for boxblur, men i stedet for å finne snittet putter du alle verdiene i en liste, sorterer den og plukker ut den
+midterste verdien og bruker den som verdi på pikselen du ser på.
 
 ## Sharpen
 
@@ -190,9 +192,23 @@ formen (se bildet):
 
 Der `L-1 = 255`, `MN = image.height*image.width` og `n_j`er antallet pixler i bildet som har intensitetsverdi `j` (mellom 0 og `k`). 
 
-
 Endre på fila `src/effects/histogramequalization.js`.
 
+**Eksempel**
+
+La oss si vi har et bilde som er `3x3`, der rødverdiene er `5, 4, 4, 5, 3, 1, 0, 4, 1`.
+Vi teller antall av hver verdi `k` og får linjen `nr` i tabellen under.  
+Deretter summerer vi hvor mange verdier som er til og med hver `k`. F. eks. er `sr[4] = 7`, fordi det er summen av `nr[0]+nr[1]+nr[2]+nr[3]+nr[4]`.  
+Så regner vi `ny_kr` for hver `k`, altså verdien den skal mappes til. For bårt 3x3 bilde blir det da `(255 / (3*3)) * sr[k]`, rundet til hele tall.  
+Når det er gjort itererer vi over alle pikslene i vårt originale bilde, og bytter ut verdiene i henhold til tabellen. F. eks. skal alle `4` bli byttet med `198`, da får vi spredd
+verdiene utover hele spekteret og får bedre kontrast.
+
+||||||||||
+|---|---|---|---|---|---|---|---|---|
+|**k**|**0**|**1**|**2**|**3**|**4**|**5**|**6**|...|
+|**nr**|1|2|0|1|3|2|0|...|
+|**sr**|1|3|3|4|7|9|9|...|
+|**ny_kr**|28|85|85|113|198|255|255|...
 
 ## Seam carving
 
