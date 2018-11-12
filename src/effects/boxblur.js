@@ -12,6 +12,8 @@ function boxblur(image, radius) {
     for (let x = radius; x < image.width-radius; x++) {
         for (let y = radius; y < image.height-radius; y++) {
 
+            // Create a localized spatial filter, averaging each pixel
+
         }
     }
     return newImage;
