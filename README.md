@@ -285,11 +285,11 @@ Merk at på kanten har vi bare to over oss. F. eks. nederst i venstre hjørne er
 Algoritmen er litt forenklet for hver piksel (man må ta hensyn til om man er på kanten):
 ```javascript
 seamValue = Math.min(
-    energyImage.getValue(x-1, y-1),
-    energyImage.getValue(x, y-1),
-    energyImage.getValue(x+1, y-1)
+    seamImage.getValue(x-1, y-1),
+    seamImage.getValue(x, y-1),
+    seamImage.getValue(x+1, y-1)
 )
-seamImage.setValue(x, y, seamValue);
+seamImage.setValue(x, y, seamValue + valueOfEnergyImage);
 ```
 Dette gjøres da først for alle pikslene på en rad, så raden under osv.
 
